@@ -28,6 +28,7 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public Pet createPet(NewPet newPet) {
+        log.debug("create new pet: {}", newPet);
         var petEntity = new PetEntity();
         petEntity.setName(newPet.getName());
         petEntity.setTag(newPet.getTag());
@@ -36,19 +37,21 @@ public class PetServiceImpl implements PetService {
 
     @Override
     public Optional<Pet> showPetById(long petId) {
+        log.debug("show Pet by Id {}", petId);
         return petRepository.findById(petId).map(this::petEntity2Pet);
     }
 
     @Override
     public PetListingResult listPets(int limit, int offset) {
         boolean hasMore = false;
-
+        log.debug("list pets: limit={}, offset={}", limit, offset);
         List<PetEntity> page = petRepository.findAll(new OffsetLimitPageRequest(limit + 1, offset));
         List<Pet> pets = page.stream().map(this::petEntity2Pet).collect(Collectors.toList());
         if (pets.size() > limit) {
             hasMore = true;
             pets.remove(pets.size() - 1);
         }
+        log.debug("return pets: pets={}, hasMore={}", pets, hasMore);
         return new PetListingResult(pets, hasMore);
     }
 
@@ -62,6 +65,7 @@ public class PetServiceImpl implements PetService {
         var foundPet = foundPetOptional.get();
         foundPet.setName(pet.getName());
         foundPet.setTag(pet.getTag());
+        log.debug("updating pet: {}", foundPet);
         return Optional.of(new Pet(foundPet.getName(), foundPet.getId()).tag(foundPet.getTag()));
     }
 }

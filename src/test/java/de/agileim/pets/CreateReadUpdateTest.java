@@ -46,7 +46,7 @@ class CreateReadUpdateTest {
         //save
         String resp = mvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(toJson(newPet)))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-        Pet savedPet = new ObjectMapper().readValue(resp, Pet.class);
+        var savedPet = new ObjectMapper().readValue(resp, Pet.class);
         assertEquals(newPet.getName(), savedPet.getName());
         assertEquals(newPet.getTag(), savedPet.getTag());
 
@@ -64,7 +64,7 @@ class CreateReadUpdateTest {
         //save
         String resp = mvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(toJson(newPet)))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-        Pet savedPet = new ObjectMapper().readValue(resp, Pet.class);
+        var savedPet = new ObjectMapper().readValue(resp, Pet.class);
 
         //update
         var changedPet = new Pet("MiauMiau", savedPet.getId()).tag("cat");
@@ -81,7 +81,7 @@ class CreateReadUpdateTest {
 
 
     @Test
-    void testCreatePetLongData() throws Exception {
+    void testCreatePetTooLongData() throws Exception {
         var builder = new StringBuilder("a");
         for (int i = 0; i < 256; i++) {
             builder.append("b");
