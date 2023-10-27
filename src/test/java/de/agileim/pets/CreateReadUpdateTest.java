@@ -83,9 +83,7 @@ class CreateReadUpdateTest {
     @Test
     void testCreatePetTooLongData() throws Exception {
         var builder = new StringBuilder("a");
-        for (int i = 0; i < 256; i++) {
-            builder.append("b");
-        }
+        builder.append("b".repeat(256));
         var newPet = new NewPet(builder.toString()).tag("dog");
 
         mvc.perform(post("/pets").contentType(MediaType.APPLICATION_JSON).content(toJson(newPet)))
