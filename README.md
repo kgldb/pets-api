@@ -3,7 +3,7 @@ Die API-Schnittstelle und die Modell-Beans werden aus der
 API-Definition mit openapi-generator-maven-plugin generiert. 
 Die Packages sind nach der Schichten aufgebaut: Controller bzw. API, Service- und
  die Persistenz-Schicht. Zum Persistieren wird die in-memory Datenbank H2 benutzt.
-Produktions-Features wie Monitoring Schnittstelle (Actuator). 
+Es fehlen Produktions-Features wie Monitoring Schnittstelle (Actuator). 
 Unit-Tests sind nicht durchgehend, aber es gibt Integrationstests. 
 
 Um die Anwendung in einer IDE zu starten, muss sie zuerst
